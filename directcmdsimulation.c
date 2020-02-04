@@ -11,8 +11,9 @@ void main(){
 		perror("pipe");
 		exit(1);
 	}
+	int fp = open("output.txt",O_CREAT|O_WRONLY);
 	if(fork() == 0){
-		while ((dup2(filedes[1], STDOUT_FILENO) == -1)) {}
+		while ((dup2(fp, STDIN_FILENO) == -1)) {}
 		char *args[] = {"ls","-l", NULL};
 		int ret = execvp("ls",args);
 		if(ret <0){
@@ -22,18 +23,6 @@ void main(){
 	}
 	
 	close(filedes[1]);
-	if(fork() == 0){
-		while((dup2(filedes[0], STDIN_FILENO) == -1)){}
-		char *args[] = {"wc","-l", NULL};
-		int ret = execvp("wc",args);
-		if(ret <0){
-			printf("Program can't be executed\n");
-		}
-		exit(0);
-	}
-	char output[100];
-	read(filedes[0], output, 100);
-	printf("%s", output);
 	close(filedes[0]);
 	exit(0);
 }
