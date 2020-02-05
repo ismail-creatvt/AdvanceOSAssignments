@@ -1,8 +1,8 @@
-total 116
--rwxr-xr-x 1 user user 8632 Feb  5 12:54 a.out
+total 108
+-rwxr-xr-x 1 user user 8632 Feb  5 12:46 a.out
 -rw-r--r-- 1 user user  362 Feb  4 15:11 atexitdemo.c
 -rw-r--r-- 1 user user  839 Feb  4 13:25 cumulativetime.c
--rw-rw-r-- 1 user user  646 Feb  5 12:54 directcmdsimulation.c
+-rw-rw-r-- 1 user user  642 Feb  5 12:46 directcmdsimulation.c
 -rwxr-xr-x 1 user user 8584 Feb  4 14:49 filesize
 -rw-r--r-- 1 user user  334 Feb  4 14:50 filesize.c
 -rw-r--r-- 1 user user  267 Feb  4 15:13 filesleep.c
@@ -14,9 +14,8 @@ total 116
 -rw-r--r-- 1 user user  808 Feb  4 18:52 listdir.c
 -rw-rw-r-- 1 user user 1039 Feb  4 19:58 listdirmon.c
 -rw-rw-r-- 1 user user  946 Feb  4 20:01 listdirsize.c
--rw---x--T 1 user user 1222 Feb  5 12:46 output
--rwSr-x--- 1 user user    0 Feb  5 12:54 output.txt
----x--x--T 1 user user 1271 Feb  5 12:51 out.txt
+-rw---s--T 1 user user    0 Feb  5 12:46 output
+-r-Sr-x--T 1 user user    0 Feb  4 20:10 output.txt
 -rw-r--r-- 1 user user   14 Feb  4 15:13 pattern.txt
 -rw-rw-r-- 1 user user  752 Feb  4 20:06 pipecmdsimulation.c
 -rw-r--r-- 1 user user   96 Feb  4 20:14 README.md
