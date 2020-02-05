@@ -3,7 +3,7 @@
 #include<unistd.h>
 #include<string.h>
 #include<sys/wait.h>
-
+#include<dirent.h>
 int occurrence(char *str, char ch){
 	int count = 0;
 	for (int i = 0; str[i] != '\0'; ++i) {
@@ -13,34 +13,39 @@ int occurrence(char *str, char ch){
     return count;
 }
 
-void count_process(char **arguments, int argc){
+void list_process(char **arguments, int argc){
 	if(argc != 3){
 		printf("Invalid arguments\n");
 		exit(1);
 	}
-	FILE *fp = fopen(arguments[2],"r");
-	if(strcmp(arguments[1],"c")==0){
-		int charactercount = 0;
-		while(fgetc(fp) != EOF) charactercount++;
-		printf("Characters : %d\n", charactercount);
-	} else if(strcmp(arguments[1],"w")==0){
-		int wordcount = 0;
-		char c;
-		while((c = fgetc(fp)) != EOF) {
-			if(c == ' ')
-				wordcount++;
-		}
-		printf("Words : %d\n", wordcount);
-	} else if(strcmp(arguments[1],"l")==0){
-		int linecount = 0;
-		char c;
-		while((c = fgetc(fp)) != EOF) {
-			if(c == '\n')
-				linecount++;
-		}
-		printf("Lines : %d\n", linecount);
+	DIR *directory = opendir(arguments[2]); 
+    struct dirent *de;
+   	char **filenames;
+
+    if (directory == NULL)
+    { 
+        printf("Could not open current directory" ); 
+        return;
+    } 
+	if(strcmp(arguments[1],"f")==0){
+		while ((de = readdir(directory)) != NULL) 
+            if(strcmp(de->d_name,".") != 0 && strcmp(de->d_name,"..")){
+                printf("%s\n", de->d_name);
+            }
+	} else if(strcmp(arguments[1],"n")==0){
+		int fileCount = 0;
+	    while ((de = readdir(directory)) != NULL) 
+	            if(strcmp(de->d_name,".") != 0 && strcmp(de->d_name,"..")){
+	                fileCount++;
+	            }
+		printf("Total files : %d\n", fileCount);
+	} else if(strcmp(arguments[1],"i")==0){
+		while ((de = readdir(directory)) != NULL) 
+            if(strcmp(de->d_name,".") != 0 && strcmp(de->d_name,"..")){
+                printf("%s -> %ld\n",de->d_name, de->d_ino);
+            }
 	}
-	fclose(fp);
+	closedir(directory);
 }
 
 void main(){
@@ -73,8 +78,8 @@ void main(){
 		}
 
 		if(fork()==0){
-			if(strcmp(arguments[0],"count") == 0){
-				count_process(arguments, argc);
+			if(strcmp(arguments[0],"list") == 0){
+				list_process(arguments, argc);
 				exit(0);
 			} else{
 				execvp(arguments[0],arguments);
