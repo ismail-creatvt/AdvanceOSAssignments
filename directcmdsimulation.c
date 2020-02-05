@@ -1,3 +1,7 @@
+/**
+14. Write a C program to implement the following unix/linux command
+i. ls –l > output.txt
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

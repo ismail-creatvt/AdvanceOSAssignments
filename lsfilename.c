@@ -1,3 +1,8 @@
+/**
+15. Write a C program which display the information of a given file similar to given by the unix / linux
+command
+ls –l <file name>
+*/
 #include<stdio.h>
 #include<unistd.h>
 #include<sys/stat.h>

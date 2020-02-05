@@ -1,3 +1,6 @@
+/**
+10. Read the current directory and display the name of the files, no of files in current directory.
+*/
 #include <stdio.h> 
 #include <dirent.h> 
 #include<string.h>

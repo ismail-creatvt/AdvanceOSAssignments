@@ -1,3 +1,6 @@
+/**
+3. To create a file with hole in it.
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<fcntl.h>

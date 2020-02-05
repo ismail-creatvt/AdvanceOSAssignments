@@ -1,3 +1,6 @@
+/**
+6. Print the type of file where file name accepted through Command Line.
+*/
 #include<stdio.h>
 #include<sys/stat.h>
 #include<stdlib.h>

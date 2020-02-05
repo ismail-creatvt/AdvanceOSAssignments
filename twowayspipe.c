@@ -1,3 +1,6 @@
+/**
+5. To handle the two-way communication between parent and child using pipe.
+*/
 #include<stdio.h>
 #include<unistd.h>
 #include<stdlib.h>

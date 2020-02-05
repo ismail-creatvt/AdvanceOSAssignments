@@ -1,3 +1,7 @@
+/**
+1. To create ‘n’ children. When the children will terminate, display total cumulative time children
+spent in user and kernel mode.
+*/
 #include<sys/resource.h>
 #include<sys/time.h>
 #include<stdio.h>

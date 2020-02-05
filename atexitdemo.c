@@ -1,3 +1,6 @@
+/**
+7. To demonstrate the use of atexit() function.
+*/
 #include<stdio.h>
 #include<stdlib.h>
 

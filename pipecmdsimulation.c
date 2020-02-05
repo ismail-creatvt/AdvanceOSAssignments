@@ -1,3 +1,8 @@
+/**
+11. Write a C program to implement the following unix/linux command (use fork, pipe and exec system
+call)
+ls –l | wc –l
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

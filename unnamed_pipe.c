@@ -1,3 +1,6 @@
+/**
+2. To generate parent process to write unnamed pipe and will read from it.
+*/
 #include<stdio.h>
 #include<unistd.h>
 #include<string.h>

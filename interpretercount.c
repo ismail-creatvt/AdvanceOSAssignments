@@ -1,3 +1,16 @@
+/**
+16. Write a C program that behaves like a shell (command interpreter). It has its own prompt say
+“NewShell$”. Any normal shell command is executed from your shell by starting a child process to
+execute the system program corresponding to the command. It should additionally interpret the
+following command.
+i)
+count c <filename> - print number of characters in file
+ii)
+count w <filename> - print number of words in file
+iii)
+count l <filename> - print number of lines in file
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

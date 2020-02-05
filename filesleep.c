@@ -1,3 +1,6 @@
+/**
+8. Open a file goes to sleep for 15 seconds before terminating.
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
