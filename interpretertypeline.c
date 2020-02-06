@@ -1,13 +1,13 @@
 /**
-17. Write a C program that behaves like a shell (command interpreter). It has its own prompt say “NewShell$”.
+18. Write a C program that behaves like a shell (command interpreter). It has its own prompt say “NewShell$”.
 Any normal shell command is executed from your shell by starting a child process to execute the system
 program corresponding to the command. It should additionally interpret the following command.
 i)
 ii)
 iii)
-list f <dirname> - print name of all files in directory
-list n <dirname> - print number of all entries
-list i<dirname> - print name and inode of all files
+typeline +10 <filename> - print first 10 lines of file
+typeline -20 <filename> - print last 20 lines of file
+typeline a <filename> - print all lines of file
 */
 
 
@@ -17,6 +17,8 @@ list i<dirname> - print name and inode of all files
 #include<string.h>
 #include<sys/wait.h>
 #include<dirent.h>
+#define max(x,y) ((x) > (y))? (x) : (y);
+
 int occurrence(char *str, char ch){
 	int count = 0;
 	for (int i = 0; str[i] != '\0'; ++i) {
@@ -26,49 +28,88 @@ int occurrence(char *str, char ch){
     return count;
 }
 
+void print_first_lines(char *linesString, FILE *fp){
+	char c;
+	int lines = atoi(linesString);
+	int lineCount = 1;
+	printf("%3d |", lineCount );
+	while((c = fgetc(fp)) != EOF){
+		fputc(c, stdout);
+		if(c == '\n') {
+			lineCount++;
+			if(lineCount > lines){
+				break;
+			}
+			printf("%3d |", lineCount );
+		}
+	}
+	printf("\n");
+}
+
+void print_last_lines(char *linesString, FILE *fp){
+	char c;
+	int lines = atoi(linesString);
+	int lineCount = 0;
+	while((c = fgetc(fp)) != EOF){
+		if(c == '\n') lineCount++;
+	}
+	int startLine = max(0,lineCount + lines);
+	lineCount = 0;
+	fseek(fp, 0, SEEK_SET);
+	while((c = fgetc(fp)) != EOF){
+		if(lineCount > startLine){
+			fputc(c, stdout);	
+		}
+		if(c == '\n'){
+			lineCount++;
+			if(lineCount > startLine){
+				printf("%3d |", lineCount);
+			}
+		}
+	}
+	printf("\n");
+}
+
+void print_all_lines(FILE *fp){
+	char c;
+	while((c = fgetc(fp)) != EOF){
+		fputc(c, stdout);
+	}
+	printf("\n");
+}
+
 void typeline_process(char **arguments, int argc){
 	if(argc != 3){
 		printf("Invalid arguments\n");
 		exit(1);
 	}
 	FILE *fp = fopen(arguments[2],"r");
-	char c;
 	if(arguments[1][0] == '+'){
-		int lines = atoi(arguments[1]);
-		printf("lines : %d\n", lines);
-		fseek(fp, lines, SEEK_SET);
-		int lineCount = 0;
-		while((c = fgetc(fp)) != EOF || lineCount < lines){
-			if(c == '\n') lineCount++;
-			fputc(c, stdout);
-		}
+		print_first_lines(arguments[1], fp);
 	} else if(arguments[1][0] == '-'){
-		int lines = atoi(arguments[1]);
-		printf("lines : %d\n", lines);
-		fseek(fp, lines, SEEK_END);
-		while((c = fgetc(fp)) != EOF) {
-			fputc(c, stdout);
-		}
+		print_last_lines(arguments[1], fp);
 	} else if(strcmp(arguments[1],"a")==0){
-		while((c = fgetc(fp)) != EOF){
-			fputc(c, stdout);
-		}
+		print_all_lines(fp);
 	}
 	fclose(fp);
 }
 
 void main(){
-	char *cmd = (char*) malloc(50 * sizeof(char));	
+	char *cmd = (char*) malloc(100 * sizeof(char));	
 	char *delimeter = " ";
 	int status;
 	char username[20];
 	getlogin_r(username, 20);
 	while(1){
 		printf("%s$ ",username);
-		fgets(cmd, 50, stdin);
+		fgets(cmd, 100, stdin);
 		if(cmd[strlen(cmd)-1] == '\n'){
 			cmd[strlen(cmd)-1] = '\0';
 		}
+		if(cmd[strlen(cmd)-1] == ' '){
+			cmd[strlen(cmd)-1] = '\0';
+		}
+
 		int occur = occurrence(cmd,' ');
 		int argc = occur +1;
 		char **arguments = (char**) malloc((argc + 1)*sizeof(char*));

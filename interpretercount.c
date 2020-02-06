@@ -57,17 +57,21 @@ void count_process(char **arguments, int argc){
 }
 
 void main(){
-	char *cmd = (char*) malloc(50 * sizeof(char));	
+	char *cmd = (char*) malloc(100 * sizeof(char));	
 	char *delimeter = " ";
 	int status;
 	char username[20];
 	getlogin_r(username, 20);
 	while(1){
 		printf("%s$ ",username);
-		fgets(cmd, 50, stdin);
+		fgets(cmd, 100, stdin);
 		if(cmd[strlen(cmd)-1] == '\n'){
 			cmd[strlen(cmd)-1] = '\0';
 		}
+		if(cmd[strlen(cmd)-1] == ' '){
+			cmd[strlen(cmd)-1] = '\0';
+		}
+
 		int occur = occurrence(cmd,' ');
 		int argc = occur +1;
 		char **arguments = (char**) malloc((argc + 1)*sizeof(char*));
