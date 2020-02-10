@@ -11,9 +11,8 @@ void main(int argc, char **argv){
 		printf("No file name passed\n");
 		exit(0);
 	}
-	int fd = open(argv[1], O_RDONLY);
 	struct stat filestat;
-	int ret = fstat(fd, &filestat);
+	int ret = stat(argv[1], &filestat);
 
 	if(S_ISREG(filestat.st_mode)){
 		printf("%s is a regular file\n", argv[1]);

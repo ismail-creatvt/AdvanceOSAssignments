@@ -22,7 +22,7 @@ void main(){
 
 	write(p[WRITE], message, MESSAGE_BLOCK_SIZE);
 
-	if(!fork()){
+	if(fork()==0){
 		char message[MESSAGE_BLOCK_SIZE];
 		read(p[READ], message, MESSAGE_BLOCK_SIZE);
 		printf("%s\n", message);

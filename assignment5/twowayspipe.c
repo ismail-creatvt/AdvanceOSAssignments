@@ -38,7 +38,12 @@ int main() {
    //if pipe1 or pipe2 can't be opened then exit
    if(!openpipe(1,pipe1) || !openpipe(2, pipe2)) exit(1);
    
-   if (fork()) {// Parent process 
+    int pid = fork();
+   if(pid < 0){
+	fprintf(stderr,"Fork can't be executed");
+	exit(1);   
+   }
+   if (pid == 0) {// Parent process 
       parent_process_code(pipe1,pipe2);
    } else { //child process
       child_process_code(pipe1,pipe2);
